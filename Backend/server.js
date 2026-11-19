@@ -8,6 +8,7 @@ import { ZodError } from "zod";
 import webhookRoutes from "./routes/webhook.routes.js"
 import invoiceRoutes from "./routes/invoice.routes.js"
 import authRoutes from "./routes/auth.routes.js"
+import agentRoutes from "./routes/agent.routes.js"
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -20,6 +21,7 @@ app.get("/health",(req,res)=>res.json({ok:true}));
 app.use("/api/invoices",invoiceRoutes)
 app.use("webhook",webhookRoutes)
 app.use("/api/auth",authRoutes)
+app.use("/api/agent",agentRoutes)
 
 
 app.use((err,req,res,next)=>{
