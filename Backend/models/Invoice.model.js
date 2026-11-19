@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 
 
 const invoiceSchema = new mongoose.Schema({
+    owner:{type:mongoose.Schema.Types.ObjectId,ref:"User",required:true,index:true},
     clientName:{type:String,required:true,trim:true},
     clientEmail:{type:String,required:true,lowercase:true,trim:true},
     itemName:{type:String,required:true,trim:true},

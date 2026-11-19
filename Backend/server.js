@@ -7,16 +7,19 @@ import { ZodError } from "zod";
 
 import webhookRoutes from "./routes/webhook.routes.js"
 import invoiceRoutes from "./routes/invoice.routes.js"
+import authRoutes from "./routes/auth.routes.js"
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
 app.get("/health",(req,res)=>res.json({ok:true}));
-app.use("api/invoices",invoiceRoutes)
+app.use("/api/invoices",invoiceRoutes)
 app.use("webhook",webhookRoutes)
+app.use("/api/auth",authRoutes)
 
 
 app.use((err,req,res,next)=>{

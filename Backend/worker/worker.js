@@ -2,7 +2,7 @@ import "dotenv/config";
 import { Worker } from "bullmq";
 import connection from "../config/redis.js";
 import { ConnectDB } from "../config/Database.js";
-import Invoice from "../models/Invoice.js";
+import Invoice from "../models/Invoice.model.js";
 import { createAndSendInvoice } from "../services/paypal/invoice.js";
 
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import redis from "ioredis";
-import Invoice from "../models/Invoice.js";
+import Invoice from "../models/Invoice.model.js";
 import { paypalRequest } from "../services/paypal/client.js";
 
 const router=Router();
