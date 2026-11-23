@@ -23,6 +23,7 @@ const worker = new Worker(
             itemName:invoice.itemName,
             amount:(invoice.amountCents/100).toFixed(2),
             note:invoice.note,
+            dueDate:invoice.dueDate,
         });
 
         invoice.paypalInvoiceId=paypalInvoiceId;

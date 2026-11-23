@@ -38,3 +38,4 @@ export async function draftInvoices(notes) {
 
   return draftSchema.parse(JSON.parse(response.text));
 }
+
