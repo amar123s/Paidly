@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { createAndSendInvoice} from "./services/paypal/invoice.js";
+import { createAndSendInvoice} from "../services/paypal/invoice.js";
 
 const id = await createAndSendInvoice({
     requestId:crypto.randomUUID(),

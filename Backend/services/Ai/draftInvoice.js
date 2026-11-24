@@ -1,6 +1,6 @@
 import z from "zod";
-import { ai,MODEL } from "./client.js";
-
+import { ai } from "./client.js";
+import { withRetry } from "./withRetry.js";
 
 const draftSchema = z.object({
     clientName:z.string().min(1),
@@ -24,18 +24,22 @@ const jsonSchema = {
   required: ["clientName", "itemName", "amountCents", "note", "dueInDays"],
 };
 
-export async function draftInvoices(notes) {
-  const response = await ai.models.generateContent({
-    model: MODEL,
+const models = [process.env.AI_MODEL,process.env.AI_FALLBACK_MODEL].filter(Boolean);
+
+const callGemini = (model, notes) =>
+  ai.models.generateContent({
+    model,
     contents: notes,
     config: {
       systemInstruction:
         "You turn a freelancer's rough notes into an invoice draft. Never invent names, emails or amounts. If a value is missing, omit it. Amounts are in USD unless stated.",
       responseMimeType: "application/json",
       responseJsonSchema: jsonSchema,
+      abortSignal: AbortSignal.timeout(15_000), 
     },
   });
 
+export async function draftInvoices(notes) {
+  const response = await withRetry((model) => callGemini(model, notes), models);
   return draftSchema.parse(JSON.parse(response.text));
 }
-
