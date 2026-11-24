@@ -11,10 +11,9 @@ router.post("/draft-invoice",async (req,res)=>{
     let draft;
     try{
         draft = await draftInvoices(notes);
-    }catch(err){
-        console.error("AI draft failed:",err.message);
-        return res.status(502).json({error:"AI draft failed, please try again"});
-    }
+    }catch (err) {
+        return res.status(503).json({ error: "AI is busy right now, please try again in a moment" });
+}
 
     const {dueInDays, ...fields}= draft;
     const dueDate= new Date(Date.now()+ dueInDays*86_400_000);
